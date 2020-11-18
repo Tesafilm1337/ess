@@ -1,0 +1,9 @@
+@import '../../../scss/vars';
+
+:host {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    display: block;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 16%);
+}
