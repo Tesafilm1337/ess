@@ -12,3 +12,110 @@ html, body {
     font-size: 10px;
     background-color: $grey;
 }
+
+* {
+    font-size: 1.6rem;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+h1 {
+    font-size: 3.8rem;
+    font-weight: 100;
+}
+
+h2 {
+    font-size: 2.4rem;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.input {
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    background-color: $white;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 16%);
+    text-align: left;
+    padding: 10px;
+    position: relative;
+
+    input {
+        border: 0;
+        outline: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-size: 1.6rem;
+        font-weight: 300;
+    }
+
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: lightgreen;
+        content: "";
+        transform: scaleX(0);
+        transition: transform 250ms ease-in-out;
+    }
+
+    &:focus-within::after {
+        transform: scaleX(1);
+    }
+}
+
+button, *[role=button] {
+    height: 40px;
+    width: 210px;
+    outline: none;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 16%);
+    font-size: 1.6rem;
+    cursor: pointer;
+
+    $colors: ('green': $prime, 'blue': $secondary);
+
+    @each $name, $color in $colors {
+
+        &.app-primary.app-#{$name} {
+            background-color: $color;
+            color: $white;
+            border: 0;
+
+            &:hover { background-color: darken($color, 1%); }
+            &:focus:active, &:active { background-color: darken($color, 3%); }
+        }
+
+        &.app-secondary.app-#{$name} {
+            background-color: $white;
+            color: $color;
+            border: 1px solid $color;
+
+            &:hover { background-color: darken($white, 1%); }
+            &:focus:active, &:active { background-color: darken($white, 3%); }
+        }
+    }
+}
+
+a {
+    font-size: 1.6rem;
+    color: $link;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+}
+
+router-outlet + * {
+    height: 100%;
+    width: 100%;
+    display: block;
+}

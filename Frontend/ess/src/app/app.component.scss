@@ -3,7 +3,12 @@
 :host {
     display: grid;
     height: 100vh;
-    grid-template-rows: 50px auto;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "content" "footer";
+}
+
+:host[head] {
+    grid-template-rows: 50px 1fr auto;
     grid-template-areas: "header" "content" "footer";
 }
 
@@ -15,5 +20,6 @@ header {
 }
 
 main {
-    grid-area: "content";
+    grid-area: content;
+    padding: 60px 110px;
 }

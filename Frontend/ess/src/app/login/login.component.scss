@@ -1,0 +1,75 @@
+@import '../../scss/vars';
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 600px;
+    height: 400px;
+    background-color: $white;
+    box-shadow: $shadow;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+
+    header {
+        background-color: $prime;
+        height: 60px;
+        color: $white;
+        text-align: center;
+
+        h1 { line-height: 60px; }
+    }
+
+    main {
+        padding: 10px 30px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+
+        .logo { display: block; }
+        h3 { color: $dark-grey; margin: 10px 0 0 0; }
+
+        .login-form {
+            height: 100%;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+
+            .controls {
+                margin: 10px 0 0 0;
+                text-align: left;
+                display: inline;
+
+                .error-text { 
+                    color: $red; 
+                    overflow: hidden; 
+                    margin: 0;
+                    height: 0;
+                    opacity: 0;
+                    transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
+
+                    &.visible {
+                        margin: 0 0 5px 0;
+                        opacity: 1;
+                        height: 21px;
+                    }
+                }
+            }
+
+            .bottom-bar {
+                margin-top: auto;
+                
+                a {
+                    float: left;
+                    line-height: 40px;
+                    height: 40px;
+                }
+                button { float: right; }
+            }
+        }
+    }
+}
+

@@ -1,6 +1,6 @@
-<header>
+<header [hidden]="!headActive">
     <app-head></app-head>
 </header>
 <main>
-    
+    <router-outlet></router-outlet>
 </main>

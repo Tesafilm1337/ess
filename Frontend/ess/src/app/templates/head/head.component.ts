@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./head.component.scss']
 })
 export class HeadComponent implements OnInit {
+  extended = false;
 
   constructor() { }
 

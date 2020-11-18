@@ -1,13 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'ess';
+  headActive = true;
 
-  ngOnInit() {    
+  @HostBinding('attr.head') get head() { return this.headActive ? '' : null; }
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.startsWith('/login')) {
+        this.headActive = false;
+        } else {
+          this.headActive = true;
+        }
+      }
+    });
   }
 }

@@ -1,0 +1,24 @@
+<div class="login-container">
+    <header>
+        <h1>Anmelden</h1>
+    </header>
+    <main>
+        <span class="logo">
+            <img src="assets/logo.svg" alt="ess" height="40">
+        </span>
+        <h3>Bei ess anmelden</h3>
+        <form #loginFrom="ngForm" class="login-form">
+            <label class="input">
+                <input #username="ngModel" ngModel minlength="3" type="text" placeholder="Benutzername" autocomplete="off" autofocus name="username">
+            </label>
+            <div class="controls">
+                <p class="error-text" [class.visible]="username.invalid" >Diesen Benutzernamen gibt es nicht.</p>
+                <a href="/">Benutzername vergessen?</a>
+            </div>            
+            <div class="bottom-bar">
+                <a href="/">Konto erstellen</a>
+                <button class="app-secondary app-blue" type="submit">Weiter</button>
+            </div>
+        </form>
+    </main>
+</div>
