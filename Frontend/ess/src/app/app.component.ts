@@ -15,7 +15,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (event.url.startsWith('/login')) {
+        if (event.url.startsWith('/login') || event.url.startsWith('/')) {
         this.headActive = false;
         } else {
           this.headActive = true;
