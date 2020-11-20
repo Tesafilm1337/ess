@@ -1,0 +1,59 @@
+<div class="auth-container">
+    <header class="app-primary" [attr.loading]="loading ? '' : null">
+        <h1>Anmelden</h1>
+    </header>
+    <main>
+        <span class="logo">
+            <img src="assets/logo.svg" alt="ess" height="40">
+        </span>
+        <div class="page-switcher" [class.long-mode]="page1Active && page2Active"
+            [@changePage]="page" (@changePage.start)="animationStart($event)" (@changePage.done)="animationDone($event)">   
+            <div class="item" *ngIf="page1Active">
+                <form #usernameFrom="ngForm" (ngSubmit)="checkUsername(usernameFrom)">
+                    <h3 class="head">Bei ess anmelden</h3>
+                    <label class="input" [class.invalid]="username.invalid  && (username.dirty || username.touched)">
+                        <input #username="ngModel" [(ngModel)]="model.username" required type="text" placeholder="Benutzername" autocomplete="off"
+                           autofocus name="username">
+                    </label>
+                    <div class="controls">
+                        <p class="error-text" 
+                            [class.visible]="username.invalid  && (username.dirty || username.touched) && username.errors.required">
+                            Geben Sie einen Benutzernamen ein.
+                        </p>
+                        <p class="error-text"
+                            [class.visible]="username.invalid  && (username.dirty || username.touched) && username.errors['user-not-found']">
+                            Das Konto konnte nicht gefunden werden.
+                        </p>
+                        <a href="/">Benutzername vergessen?</a>
+                    </div>
+                    <div class="bottom-bar">
+                        <a href="/">Konto erstellen</a>
+                        <button [disabled]="usernameFrom.invalid" class="app-secondary app-blue" type="submit">Weiter</button>
+                    </div>
+                </form>
+            </div>    
+            <div class="item" *ngIf="page2Active">
+                <form #loginForm="ngForm" class="item">
+                    <span class="head">
+                        <button class="back-button" type="button" (click)="location.back()">{{ model.username }}</button>
+                    </span>
+                    <input class="hidden-username" [value]="model.username" type="text" name="username">
+                    <label class="input" [class.invalid]="password.invalid  && (password.dirty || password.touched)">
+                        <input #password="ngModel" [(ngModel)]="model.password" type="password" placeholder="Passwort" autocomplete="off"
+                            required name="password">
+                    </label>
+                    <div class="controls">
+                        <p class="error-text"
+                            [class.visible]="password.invalid  && (password.dirty || password.touched) && password.errors.required">
+                            Geben Sie ein Passwort ein.
+                        </p>
+                    </div>
+                    <div class="bottom-bar">
+                        <a href="/">Passwort vergessen?</a>
+                        <button [disabled]="loginForm.invalid" class="app-primary app-blue" type="submit">Anmelden</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

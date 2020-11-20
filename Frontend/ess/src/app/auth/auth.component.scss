@@ -1,12 +1,14 @@
 @import '../../scss/vars';
 
 :host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline;
 }
 
-.login-container {
+.auth-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 600px;
     height: 400px;
     background-color: $white;
@@ -15,12 +17,37 @@
     grid-template-rows: 60px 1fr;
 
     header {
-        background-color: $prime;
         height: 60px;
         color: $white;
         text-align: center;
 
         h1 { line-height: 60px; }
+
+        &.app-primary {
+            background-color: $prime;
+
+            &[loading] {
+                background: linear-gradient(to right, $prime, $prime);
+                background-color: #ccc;
+                background-size: 20%;
+                background-repeat: repeat-y;
+                background-position: -25% 0;
+                animation: scroll 2s ease-in-out infinite;
+            }
+        }
+
+        &.app-secondary {
+            background-color: $secondary;
+
+            &[loading] {
+                background: linear-gradient(to right, $secondary, $secondary);
+                background-color: #ccc;
+                background-size: 20%;
+                background-repeat: repeat-y;
+                background-position: -25% 0;
+                animation: scroll 2s ease-in-out infinite;
+            }
+        }
     }
 
     main {
@@ -61,9 +88,24 @@
                         margin: 10px 0 30px 0;
                     }
 
+                    .hidden-username {
+                        display: none;
+                    }
+
+                    .input.invalid {
+                        &::after {
+                            background-color: $red;
+                        }
+
+                        input {
+                            color: $red;
+                        }
+                    }
+
                     .back-button {
                         height: 30px;
-                        width: 165px;
+                        padding: 0 20px;
+                        width: auto;
                         border: 1px solid $secondary;
                         cursor: pointer;
                         background-color: $white;
@@ -80,27 +122,29 @@
 
                     .controls {
                         margin: 10px 0 0 0;
-                        text-align: left;
                         display: inline;
+                        text-align: left;
+                    }
 
-                        .error-text { 
-                            color: $red; 
-                            overflow: hidden; 
-                            margin: 0;
-                            height: 0;
-                            opacity: 0;
-                            transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
+                    .error-text { 
+                        color: $red; 
+                        overflow: hidden; 
+                        text-align: left;
+                        margin: 0;
+                        height: 0;
+                        opacity: 0;
+                        font-size: 1.4rem;
+                        transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
 
-                            &.visible {
-                                margin: 0 0 5px 0;
-                                opacity: 1;
-                                height: 21px;
-                            }
+                        &.visible {
+                            margin: 0 0 5px 0;
+                            opacity: 1;
+                            height: 21px;
                         }
                     }
 
                     .bottom-bar {
-                        margin-top: auto;
+                        &:not(.flex) { margin-top: auto; }
                         
                         a {
                             float: left;
@@ -113,5 +157,10 @@
             }
         }
     }
+}
+
+@keyframes scroll {
+    50% { background-size: 100%; }
+    100% {background-position: 125% 0;}
 }
 

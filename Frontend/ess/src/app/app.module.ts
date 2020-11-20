@@ -5,16 +5,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadComponent } from './templates/head/head.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login.component';
 import { FormsModule } from '@angular/forms';
 import { LandingComponent } from './landing/landing.component';
+import { AuthenticationService } from './serivces/authentication.service';
+import { SignupComponent } from './auth/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadComponent,
     LoginComponent,
-    LandingComponent
+    LandingComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,7 @@ import { LandingComponent } from './landing/landing.component';
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
