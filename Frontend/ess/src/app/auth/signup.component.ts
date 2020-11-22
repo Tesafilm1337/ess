@@ -31,7 +31,14 @@ export class SignupComponent implements OnInit {
     username: null,
     password: null,
     password1: null,
+
+    email: null,
+    day: null,
+    month: null,
+    year: null,
   };
+
+  monthFocused = false;
 
   constructor() { }
 

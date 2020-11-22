@@ -84,8 +84,12 @@
                     flex-direction: column;
                     text-align: center;
 
-                    .head {
+                    .head:not(.flex) {
                         margin: 10px 0 30px 0;
+                    }
+
+                    .head.flex {
+                        margin: 10px 0 0 0;
                     }
 
                     .hidden-username {
@@ -151,7 +155,13 @@
                             line-height: 40px;
                             height: 40px;
                         }
-                        button { float: right; }
+
+                        button[role=a] {
+                            float: left;
+                            height: 40px;
+                        }
+
+                        button:not([role]) { float: right; }
                     }
                 }
             }

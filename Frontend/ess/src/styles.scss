@@ -45,7 +45,7 @@ h3 {
     text-align: left;
     position: relative;
 
-    input, .widget {
+    input {
         border: 0;
         outline: 0;
         padding: 0;
@@ -54,6 +54,39 @@ h3 {
         padding: 10px;
         font-size: 1.6rem;
         font-weight: 300;
+    }
+
+    &.select {
+        .placeholder {
+            position: absolute;
+            font-weight: 300;
+            opacity: 0.5;
+            padding: 10px;
+        }
+
+        .control {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+
+            select {
+                font-weight: 300;
+                height: 100%;
+                width: 100%;
+                border: none;
+                outline: none;
+                background: none;
+                appearance: none;
+
+                padding: 10px 40px 10px 7px;
+                line-height: 1;
+
+                option:empty {
+                    display: none;
+                }
+            }
+        }
     }
 
     &::after {
@@ -73,7 +106,7 @@ h3 {
     }
 }
 
-button, *[role=button] {
+button:not([role]), *[role=button] {
     height: 40px;
     width: 210px;
     outline: none;
@@ -113,11 +146,18 @@ button, *[role=button] {
     }
 }
 
-a {
+a:not([role]), *[role=a] {
     font-size: 1.6rem;
     color: $link;
     font-weight: 600;
     text-decoration: none;
+    outline: none;
+
+    &[role=a] {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
 
     &:hover { text-decoration: underline; }
 }

@@ -9,7 +9,7 @@
         .horizontal {
             display: flex;
             
-            *:not(:last-child) {
+            span.wrapper:not(:last-child) {
                 margin-right: 20px;
             }
         }

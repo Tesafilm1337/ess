@@ -68,29 +68,55 @@
             </div>
             <div class="item" *ngIf="page2Active">
                 <form>
-                    <div class="head" style="text-align: left;">
+                    <div class="head flex" style="text-align: left;">
                         Simon König <b>@Simone Zitrone</b>
                     </div>
+                    <label class="input" [class.invalid]="email.invalid  && (email.dirty || email.touched)">
+                        <input #email="ngModel" [(ngModel)]="model.email" required email type="text" placeholder="E-Mail Adresse" autocomplete="off"
+                            autofocus name="email">
+                    </label>
                     <div class="horizontal">
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="firstName.invalid  && (firstName.dirty || firstName.touched)">
-                                <input #firstName="ngModel" [(ngModel)]="model.firstName" required type="text" placeholder="Vorname"
-                                    autocomplete="off" autofocus name="first-name">
+                            <label class="input" [class.invalid]="day.invalid  && (day.dirty || day.touched)">
+                                <input #day="ngModel" [(ngModel)]="model.day" required pattern="(0[1-9]|[12]\d|3[01])" type="text" placeholder="Tag"
+                                    autocomplete="off" autofocus name="day">
                             </label>
                         </span>
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="firstName.invalid  && (firstName.dirty || firstName.touched)">
-                                <select name="" id="" class="widget">
-                                    <option>März</option>
-                                </select>
+                            <label class="input select" [class.invalid]="month.invalid  && (month.dirty || month.touched)">
+                                <div class="placeholder" *ngIf="model.month == null && !monthFocused">
+                                    <label for="month">Monat</label>
+                                </div>
+                                <div class="control">
+                                    <select #month="ngModel" [(ngModel)]="model.month" name="month" id="month" 
+                                        (focus)="monthFocused = true" (blur)="monthFocused = false">
+                                        <option></option>
+                                        <option value="1">Januar</option>
+                                        <option value="2">Februar</option>
+                                        <option value="3">März</option>
+                                        <option value="4">April</option>
+                                        <option value="5">Mai</option>
+                                        <option value="6">Juni</option>
+                                        <option value="7">Juli</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Dezember</option>
+                                    </select>
+                                </div>
                             </label>
                         </span>
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="firstName.invalid  && (firstName.dirty || firstName.touched)">
-                                <input #firstName="ngModel" [(ngModel)]="model.firstName" required type="text" placeholder="Vorname"
-                                    autocomplete="off" autofocus name="first-name">
+                            <label class="input" [class.invalid]="year.invalid  && (year.dirty || year.touched)">
+                                <input #year="ngModel" [(ngModel)]="model.year" required pattern="^\d{4}$" type="text" placeholder="Jahr"
+                                    autocomplete="off" autofocus name="year">
                             </label>
                         </span>
+                    </div>
+                    <div class="bottom-bar flex">
+                        <button role="a" type="button">Zurück</button>
+                        <button class="app-secondary app-green" type="submit">Weiter</button>
                     </div>
                 </form>
             </div>
