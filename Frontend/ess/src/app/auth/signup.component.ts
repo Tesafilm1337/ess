@@ -20,6 +20,7 @@ import { NgForm } from '@angular/forms';
   ]
 })
 export class SignupComponent implements OnInit {
+  loading = false;
 
   page = 'page1';
   page1Active = true;
@@ -46,6 +47,8 @@ export class SignupComponent implements OnInit {
   }
 
   submitForm1(form: NgForm) {
+    this.loading = true;
+    console.log(document.activeElement);
     this.page = 'page2';
   }
 
@@ -63,6 +66,7 @@ export class SignupComponent implements OnInit {
     } else if (event.fromState === 'page2' && event.toState === 'page1') {
       this.page2Active = false;
     }
+    this.loading = false;
   }
 
 }

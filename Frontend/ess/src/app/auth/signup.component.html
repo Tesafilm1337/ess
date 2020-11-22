@@ -1,5 +1,5 @@
 <div class="auth-container">
-    <header class="app-secondary">
+    <header class="app-secondary" [attr.loading]="loading ? '' : null">
         <h1>Konto erstellen</h1>
     </header>
     <main>
@@ -61,25 +61,27 @@
                         </span>
                     </div>
                     <div class="bottom-bar flex">
-                        <a href="/">Stattdessen anmelden</a>
-                        <button class="app-secondary app-green" type="submit">Weiter</button>
+                        <a routerLink="/login">Stattdessen anmelden</a>
+                        <button [disabled]="form1.invalid" class="app-secondary app-green" type="submit">Weiter</button>
                     </div>
                 </form>
             </div>
             <div class="item" *ngIf="page2Active">
-                <form>
+                <form #form2="ngForm">
                     <div class="head flex" style="text-align: left;">
-                        Simon König <b>@Simone Zitrone</b>
+                        {{ model.firstName }} {{ model.lastName }} <b>@{{ model.username }}</b>
                     </div>
-                    <label class="input" [class.invalid]="email.invalid  && (email.dirty || email.touched)">
-                        <input #email="ngModel" [(ngModel)]="model.email" required email type="text" placeholder="E-Mail Adresse" autocomplete="off"
-                            autofocus name="email">
-                    </label>
+                    <div class="wrapper">
+                        <label class="input" [class.invalid]="email.invalid  && (email.dirty || email.touched)">
+                            <input #email="ngModel" [(ngModel)]="model.email" required email type="text" placeholder="E-Mail Adresse"
+                                autocomplete="off" name="email">
+                        </label>
+                    </div>
                     <div class="horizontal">
                         <span class="wrapper">
                             <label class="input" [class.invalid]="day.invalid  && (day.dirty || day.touched)">
                                 <input #day="ngModel" [(ngModel)]="model.day" required pattern="(0[1-9]|[12]\d|3[01])" type="text" placeholder="Tag"
-                                    autocomplete="off" autofocus name="day">
+                                    autocomplete="off" name="day">
                             </label>
                         </span>
                         <span class="wrapper">
@@ -110,13 +112,13 @@
                         <span class="wrapper">
                             <label class="input" [class.invalid]="year.invalid  && (year.dirty || year.touched)">
                                 <input #year="ngModel" [(ngModel)]="model.year" required pattern="^\d{4}$" type="text" placeholder="Jahr"
-                                    autocomplete="off" autofocus name="year">
+                                    autocomplete="off" name="year">
                             </label>
                         </span>
                     </div>
                     <div class="bottom-bar flex">
-                        <button role="a" type="button">Zurück</button>
-                        <button class="app-secondary app-green" type="submit">Weiter</button>
+                        <button role="a" type="button" (click)="page = 'page1'">Zurück</button>
+                        <button [disabled]="form2.invalid" class="app-secondary app-green" type="submit">Weiter</button>
                     </div>
                 </form>
             </div>
