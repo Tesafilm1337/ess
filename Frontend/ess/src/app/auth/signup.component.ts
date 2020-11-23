@@ -1,6 +1,7 @@
 import { style, trigger, transition, animate, keyframes } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChildren } from '@angular/core';
+import { AbstractControl, NgForm } from '@angular/forms';
+import { AuthenticationService } from '../serivces/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -41,15 +42,24 @@ export class SignupComponent implements OnInit {
 
   monthFocused = false;
 
-  constructor() { }
+  constructor(
+    private auth: AuthenticationService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  submitForm1(form: NgForm) {
+  async submitForm1(form: NgForm) {
+    (document.activeElement as HTMLElement).blur();
     this.loading = true;
-    console.log(document.activeElement);
-    this.page = 'page2';
+    await this.checkUsername(form.controls.username);
+    if (form.valid) {
+      this.loading = true;
+      console.log(document.activeElement);
+      this.page = 'page2';
+    } else {
+      this.loading = false;
+    }
   }
 
   animationStart(event) {
@@ -67,6 +77,20 @@ export class SignupComponent implements OnInit {
       this.page2Active = false;
     }
     this.loading = false;
+  }
+
+  private async checkUsername(control: AbstractControl): Promise<void> {
+    return new Promise(resolve => {
+      if (control.value === '' || control.value === null) {
+        resolve();
+        return;
+      }
+
+      setInterval(() => {
+        control.setErrors({ username: true });
+        resolve();
+      }, 750);
+    });
   }
 
 }

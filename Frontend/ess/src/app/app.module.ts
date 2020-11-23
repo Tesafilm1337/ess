@@ -10,9 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { LandingComponent } from './landing/landing.component';
 import { AuthenticationService } from './serivces/authentication.service';
 import { SignupComponent } from './auth/signup.component';
-import { PasswordValidatorDirective } from './directives/password-validator.directive';
 import { HttpClientModule } from '@angular/common/http';
-import { UsernameValidatorDirective } from './directives/username-validator.directive';
 
 @NgModule({
   declarations: [
@@ -21,8 +19,6 @@ import { UsernameValidatorDirective } from './directives/username-validator.dire
     LoginComponent,
     LandingComponent,
     SignupComponent,
-    UsernameValidatorDirective,
-    PasswordValidatorDirective
   ],
   imports: [
     BrowserModule,

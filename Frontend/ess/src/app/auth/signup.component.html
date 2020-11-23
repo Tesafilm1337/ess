@@ -6,63 +6,71 @@
         <span class="logo">
             <img src="assets/logo.svg" alt="ess" height="40">
         </span>
-        <div class="page-switcher" [class.long-mode]="page1Active && page2Active"
+        <div class="page-switcher" [class.loading]="loading" [class.long-mode]="page1Active && page2Active"
             [@changePage]="page" (@changePage.start)="animationStart($event)" (@changePage.done)="animationDone($event)">
             <div class="item" *ngIf="page1Active">
                 <form #form1="ngForm" (ngSubmit)="submitForm1(form1)">
                     <div class="horizontal" style="margin-top: 10px;">
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="firstName.invalid  && (firstName.dirty || firstName.touched)">
+                            <label class="input" [class.invalid]="firstName.invalid  && (firstName.dirty || firstName.touched || form1.submitted)">
                                 <input #firstName="ngModel" [(ngModel)]="model.firstName" required type="text" placeholder="Vorname"
                                     autocomplete="off" autofocus name="first-name">
                             </label>
                             <p class="error-text" 
-                                [class.visible]="firstName.invalid  && (firstName.dirty || firstName.touched) && firstName.errors.required">
+                                [class.visible]="firstName.invalid  && (firstName.dirty || firstName.touched || form1.submitted) && firstName.errors.required">
                                 Geben Sie einen Vornamen ein.
                             </p>
                         </span>
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="lastName.invalid  && (lastName.dirty || lastName.touched)">
+                            <label class="input" [class.invalid]="lastName.invalid  && (lastName.dirty || lastName.touched || form1.submitted)">
                                 <input #lastName="ngModel" [(ngModel)]="model.lastName" required type="text" placeholder="Nachname"
                                     autocomplete="off" name="last-name">
                             </label>
                             <p class="error-text"
-                                [class.visible]="lastName.invalid  && (lastName.dirty || lastName.touched) && lastName.errors.required">
+                                [class.visible]="lastName.invalid  && (lastName.dirty || lastName.touched || form1.submitted) && lastName.errors.required">
                                 Geben Sie einen Nachnamen ein.
                             </p>
                         </span>
                     </div>
                     <span class="wrapper">
-                        <label class="input" [class.invalid]="username.invalid  && (username.dirty || username.touched)">
+                        <label class="input" [class.invalid]="username.invalid  && (username.dirty || username.touched || form1.submitted)">
                             <input #username="ngModel" [(ngModel)]="model.username" required type="text" placeholder="Benutzername"
                                 autocomplete="off" name="username">
                         </label>
                         <p class="error-text"
-                            [class.visible]="username.invalid  && (username.dirty || username.touched) && username.errors.required">
+                            [class.visible]="username.invalid  && (username.dirty || username.touched || form1.submitted) && username.errors.required">
                             Geben Sie einen Benutzernamen ein.
+                        </p>
+                        <p class="error-text"
+                            [class.visible]="username.invalid  && (username.dirty || username.touched || form1.submitted) && username.errors.username">
+                            Es exsistiert schon ein Konto mit diesem Benutzernamen. Wählen Sie einen anderen.
                         </p>
                     </span>
                     <div class="horizontal">
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="password.invalid  && (password.dirty || password.touched)">
+                            <label class="input" [class.invalid]="password.invalid  && (password.dirty || password.touched || form1.submitted)">
                                 <input #password="ngModel" [(ngModel)]="model.password" required type="password" placeholder="Passwort"
                                     autocomplete="off" name="password">
                             </label>
                             <p class="error-text"
-                                [class.visible]="password.invalid  && (password.dirty || password.touched) && password.errors.required">
+                                [class.visible]="password.invalid  && (password.dirty || password.touched || form1.submitted) && password.errors.required">
                                 Geben Sie ein Passwort ein.
                             </p>
                         </span>
                         <span class="wrapper">
-                            <label class="input" [class.invalid]="password1.invalid  && (password1.dirty || password1.touched)">
-                                <input #password1="ngModel" [(ngModel)]="model.password1" required type="password" placeholder="Passwort bestätigen"
+                            <label class="input" [class.invalid]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted)">
+                                <input #password1="ngModel" [(ngModel)]="model.password1" type="password" placeholder="Passwort bestätigen"
                                     autocomplete="off" name="password1">
                             </label>
+                            <p class="error-text"
+                                [class.visible]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted) && password.errors.password">
+                                Passwörter sind nicht identisch.
+                            </p>
                         </span>
                     </div>
                     <div class="bottom-bar flex">
                         <a routerLink="/login">Stattdessen anmelden</a>
-                        <button [disabled]="form1.invalid" class="app-secondary app-green" type="submit">Weiter</button>
+                        <button class="app-secondary app-green" type="submit">Weiter</button>
                     </div>
                 </form>
             </div>

@@ -71,10 +71,29 @@
                 width: calc(200% + 60px);
             }
 
+            &.loading .item::after {
+                opacity: 0.5;
+                pointer-events: all;
+            }
+
             .item {
                 height: 100%;
                 width: 540px;
                 margin-right: 30px;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    background-color: $white;
+                    transition: opacity 100ms ease-in-out;
+                    pointer-events: none;
+                }
                 
                 form {
                     height: 100%;
