@@ -1,0 +1,195 @@
+@import '../../scss/vars';
+
+:host {
+    display: inline;
+}
+
+.auth-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    background-color: $white;
+    box-shadow: $shadow;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+
+    header {
+        height: 60px;
+        color: $white;
+        text-align: center;
+
+        h1 { line-height: 60px; }
+
+        &.app-primary {
+            background-color: $prime;
+
+            &[loading] {
+                background: linear-gradient(to right, $prime, $prime);
+                background-color: #ccc;
+                background-size: 20%;
+                background-repeat: repeat-y;
+                background-position: -25% 0;
+                animation: scroll 2s ease-in-out infinite;
+            }
+        }
+
+        &.app-secondary {
+            background-color: $secondary;
+
+            &[loading] {
+                background: linear-gradient(to right, $secondary, $secondary);
+                background-color: #ccc;
+                background-size: 20%;
+                background-repeat: repeat-y;
+                background-position: -25% 0;
+                animation: scroll 2s ease-in-out infinite;
+            }
+        }
+    }
+
+    main {
+        padding: 10px 30px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        .logo { display: block; }
+        h3 { color: $dark-grey; }
+
+        .page-switcher {
+            height: 100%;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            width: calc(100% + 30px);
+
+            &.long-mode {
+                width: calc(200% + 60px);
+            }
+
+            &.loading .item::after {
+                opacity: 0.5;
+                pointer-events: all;
+            }
+
+            .item {
+                height: 100%;
+                width: 540px;
+                margin-right: 30px;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    background-color: $white;
+                    transition: opacity 100ms ease-in-out;
+                    pointer-events: none;
+                }
+                
+                form {
+                    height: 100%;
+                    width: 100%;
+                    padding: 0 0 30px 0;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+
+                    .head:not(.flex) {
+                        margin: 10px 0 30px 0;
+                    }
+
+                    .head.flex {
+                        margin: 10px 0 0 0;
+                    }
+
+                    .hidden-username {
+                        display: none;
+                    }
+
+                    .input.invalid {
+                        &::after {
+                            background-color: $red;
+                        }
+
+                        input {
+                            color: $red;
+                        }
+                    }
+
+                    .back-button {
+                        height: 30px;
+                        padding: 0 20px;
+                        width: auto;
+                        border: 1px solid $secondary;
+                        cursor: pointer;
+                        background-color: $white;
+                        box-shadow: 0 3px 0 rgba(0, 0, 0, 16%);
+
+                        &:hover {
+                            background-color: darken($white, 1%);
+                        }
+
+                        &:active {
+                            background-color: darken($white, 3%);
+                        }
+                    }
+
+                    .controls {
+                        margin: 10px 0 0 0;
+                        display: inline;
+                        text-align: left;
+                    }
+
+                    .error-text { 
+                        color: $red; 
+                        overflow: hidden; 
+                        text-align: left;
+                        margin: 0;
+                        height: 0;
+                        opacity: 0;
+                        font-size: 1.4rem;
+                        transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
+
+                        &.visible {
+                            margin: 0 0 5px 0;
+                            opacity: 1;
+                            height: 21px;
+                        }
+                    }
+
+                    .bottom-bar {
+                        &:not(.flex) { margin-top: auto; }
+                        
+                        a {
+                            float: left;
+                            line-height: 40px;
+                            height: 40px;
+                        }
+
+                        button[role=a] {
+                            float: left;
+                            height: 40px;
+                        }
+
+                        button:not([role]) { float: right; }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes scroll {
+    50% { background-size: 100%; }
+    100% {background-position: 125% 0;}
+}
+

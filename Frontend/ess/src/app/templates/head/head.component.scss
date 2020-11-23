@@ -1,0 +1,101 @@
+@import '../../../scss/vars';
+
+:host {
+    height: 100%;
+    width: 100%;
+    background-color: $white;
+    display: flex;
+    box-shadow: $shadow;
+    justify-content: space-between;
+    position: relative;
+}
+
+span.loader {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background-color: $prime;
+}
+
+.logo-container {
+    padding: 10px;
+    height: 100%;
+
+    img {
+        height: 100%;
+    }
+}
+
+.menu-container {
+    font-size: 1.6rem;
+    height: 100%;
+    // transition-delay: 250ms;
+    // transition: height 250ms ease-in-out;
+    
+    &.extended-lol {
+        background-color: $white;
+        box-shadow: $shadow;
+        height: 200%;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        height: 50px;
+        
+        li {
+            list-style: none;
+            display: inline-block;
+            height: 50px;
+            padding: 0 30px;
+            position: relative;
+
+            a {
+                line-height: 50px;
+                display: block;
+                color: black;
+                text-decoration: none;
+                font-weight: normal;
+            }
+
+            .effect {
+                padding: 0 30px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                height: 0;
+                width: 100%;
+                background-color: $prime;
+                overflow: hidden;
+                transition: height 250ms ease-in-out;
+
+                a { color: $white; text-decoration: underline; }
+            }
+
+            &:hover .effect {
+                height: 50px;
+            }
+
+            .extension {
+                position: fixed;
+                top: 50px;
+                right: 0;
+                width: 50%;
+                background-color: $white;
+                box-shadow: $shadow;
+                overflow: hidden;
+                height: 0;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            &:hover .extension {             
+                height: 50px;
+            }
+        }
+    }
+}

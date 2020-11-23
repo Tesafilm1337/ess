@@ -1,0 +1,17 @@
+.auth-container main {
+    .page-switcher .item form {
+        justify-content: space-between;
+
+        span.wrapper {
+            width: 100%;
+        }
+
+        .horizontal {
+            display: flex;
+            
+            span.wrapper:not(:last-child) {
+                margin-right: 20px;
+            }
+        }
+    }
+}
