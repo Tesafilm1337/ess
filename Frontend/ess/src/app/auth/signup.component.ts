@@ -78,7 +78,7 @@ export class SignupComponent implements OnInit, AfterViewInit {
 
     (document.activeElement as HTMLElement).blur();
     this.loading = true;
-    const data = await this.auth.checkUsername(form.controls.username.value).toPromise();
+    const data = await this.auth.checkUsername(this.model.username).toPromise();
     if (!data.data) {
       this.page = 'page2';
     } else {

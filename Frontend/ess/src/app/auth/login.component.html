@@ -33,24 +33,28 @@
                 </form>
             </div>    
             <div class="item" *ngIf="page2Active">
-                <form #loginForm="ngForm" class="item">
+                <form #loginForm="ngForm" class="item" (ngSubmit)="login(loginForm)">
                     <span class="head">
                         <button class="back-button" type="button" (click)="location.back()">{{ model.username }}</button>
                     </span>
                     <input class="hidden-username" [value]="model.username" type="text" name="username">
-                    <label class="input" [class.invalid]="password.invalid  && (password.dirty || password.touched)">
+                    <label class="input" [class.invalid]="password.invalid  && (password.dirty || password.touched || loginForm.submitted)">
                         <input #password="ngModel" [(ngModel)]="model.password" type="password" placeholder="Passwort" autocomplete="off"
                             required name="password">
                     </label>
                     <div class="controls">
                         <p class="error-text"
-                            [class.visible]="password.invalid  && (password.dirty || password.touched) && password.errors.required">
+                            [class.visible]="password.invalid  && (password.dirty || password.touched || loginForm.submitted) && password.errors.required">
                             Geben Sie ein Passwort ein.
+                        </p>
+                        <p class="error-text"
+                            [class.visible]="password.invalid  && (password.dirty || password.touched || loginForm.submitted) && password.errors.password">
+                            Falsches Passwort. Bitte versuchen Sie es erneut.
                         </p>
                     </div>
                     <div class="bottom-bar">
                         <a href="/">Passwort vergessen?</a>
-                        <button [disabled]="loginForm.invalid" class="app-primary app-blue" type="submit">Anmelden</button>
+                        <button [disabled]="loading" class="app-primary app-blue" type="submit">Anmelden</button>
                     </div>
                 </form>
             </div>

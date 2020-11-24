@@ -40,7 +40,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     public location: Location,
     private zone: NgZone,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -72,6 +73,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.loading = false;
       form.controls.username.setErrors({ notFound: true });
       this.username.nativeElement.focus();
+    }
+  }
+
+  async login(form: NgForm) {
+    if (form.invalid) {
+      this.password.nativeElement.focus();
+      return;
+    }
+
+    (document.activeElement as HTMLElement).blur();
+    this.loading = true;
+    const data = await this.authentication.login(this.model.username, this.model.password).toPromise();
+    if (data.data) {
+      this.loading = false;
+      this.router.navigate(['/']);
+    } else if (data.errors.includes('password')) {
+      this.loading = false;
+      form.controls.password.reset();
+      form.controls.password.setErrors({ password: true });
+      this.password.nativeElement.focus();
+    } else {
+      window.location.reload();
     }
   }
 
