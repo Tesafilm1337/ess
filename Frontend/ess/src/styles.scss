@@ -137,6 +137,10 @@ button:not([role]), *[role=button] {
         }
     }
 
+    &:focus:active:not(:disabled), &:active:not(:disabled) {
+        box-shadow: none;
+    }
+
     &:disabled {
         box-shadow: none;
         cursor: not-allowed;

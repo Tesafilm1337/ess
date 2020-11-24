@@ -1,5 +1,5 @@
 import { style, trigger, transition, animate, keyframes } from '@angular/animations';
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AbstractControl, NgForm } from '@angular/forms';
 import { AuthenticationService } from '../serivces/authentication.service';
 
@@ -20,7 +20,7 @@ import { AuthenticationService } from '../serivces/authentication.service';
     ])
   ]
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, AfterViewInit {
   loading = false;
 
   page = 'page1';
@@ -42,23 +42,49 @@ export class SignupComponent implements OnInit {
 
   monthFocused = false;
 
+  @ViewChild('firstName', { read: ElementRef, static: false }) firstName: ElementRef<HTMLInputElement>;
+  @ViewChild('lastName', { read: ElementRef, static: false }) lastName: ElementRef<HTMLInputElement>;
+  @ViewChild('username', { read: ElementRef, static: false }) username: ElementRef<HTMLInputElement>;
+  @ViewChild('password', { read: ElementRef, static: false }) password: ElementRef<HTMLInputElement>;
+  @ViewChild('password1', { read: ElementRef, static: false }) password1: ElementRef<HTMLInputElement>;
+
   constructor(
     private auth: AuthenticationService
   ) { }
 
-  ngOnInit(): void {
+  get form1(): { [key: string]: ElementRef<HTMLInputElement> } {
+    return {
+      'first-name': this.firstName,
+      'last-name': this.lastName,
+      username: this.username,
+      password: this.password,
+      password1: this.password1
+    };
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.firstName.nativeElement.focus();
   }
 
   async submitForm1(form: NgForm) {
+    if (form.invalid) {
+      const invalids = Object.keys(this.form1).filter(key => form.controls[key].invalid).map(key => this.form1[key]);
+      invalids[0].nativeElement.focus();
+      return;
+    }
+
     (document.activeElement as HTMLElement).blur();
     this.loading = true;
-    await this.checkUsername(form.controls.username);
-    if (form.valid) {
-      this.loading = true;
-      console.log(document.activeElement);
+    const data = await this.auth.checkUsername(form.controls.username.value).toPromise();
+    if (!data.data) {
       this.page = 'page2';
     } else {
       this.loading = false;
+      form.controls.username.setErrors({ username: true });
+      this.username.nativeElement.focus();
     }
   }
 
@@ -78,19 +104,4 @@ export class SignupComponent implements OnInit {
     }
     this.loading = false;
   }
-
-  private async checkUsername(control: AbstractControl): Promise<void> {
-    return new Promise(resolve => {
-      if (control.value === '' || control.value === null) {
-        resolve();
-        return;
-      }
-
-      setInterval(() => {
-        control.setErrors({ username: true });
-        resolve();
-      }, 750);
-    });
-  }
-
 }

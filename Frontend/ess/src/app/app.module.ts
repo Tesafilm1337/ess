@@ -11,6 +11,7 @@ import { LandingComponent } from './landing/landing.component';
 import { AuthenticationService } from './serivces/authentication.service';
 import { SignupComponent } from './auth/signup.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PasswordValidatorDirective } from './directives/password-validator.directive';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     LandingComponent,
     SignupComponent,
+    PasswordValidatorDirective,
   ],
   imports: [
     BrowserModule,

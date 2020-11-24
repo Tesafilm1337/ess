@@ -59,18 +59,22 @@
                         </span>
                         <span class="wrapper">
                             <label class="input" [class.invalid]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted)">
-                                <input #password1="ngModel" [(ngModel)]="model.password1" type="password" placeholder="Passwort bestätigen"
+                                <input #password1="ngModel" [(ngModel)]="model.password1" required [password]="model.password" type="password" placeholder="Passwort bestätigen"
                                     autocomplete="off" name="password1">
                             </label>
                             <p class="error-text"
-                                [class.visible]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted) && password.errors.password">
+                                [class.visible]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted) && password1.errors.required">
+                                Bestätigen Sie ihr Passwort.
+                            </p>
+                            <p class="error-text"
+                                [class.visible]="password1.invalid  && (password1.dirty || password1.touched || form1.submitted) && password1.errors.password">
                                 Passwörter sind nicht identisch.
                             </p>
                         </span>
                     </div>
                     <div class="bottom-bar flex">
                         <a routerLink="/login">Stattdessen anmelden</a>
-                        <button class="app-secondary app-green" type="submit">Weiter</button>
+                        <button [disabled]="loading" class="app-secondary app-green" type="submit">Weiter</button>
                     </div>
                 </form>
             </div>

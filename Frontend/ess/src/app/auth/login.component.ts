@@ -1,6 +1,6 @@
 import { style, trigger, transition, animate, keyframes } from '@angular/animations';
 import { Location } from '@angular/common';
-import { Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../serivces/authentication.service';
@@ -22,7 +22,7 @@ import { AuthenticationService } from '../serivces/authentication.service';
     ])
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   loading = false;
 
   page = 'page1';
@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
     password: null,
   };
 
-  private submittedName: string;
-
   @ViewChild('username', { read: ElementRef, static: false }) username: ElementRef<HTMLInputElement>;
   @ViewChild('password', { read: ElementRef, static: false }) password: ElementRef<HTMLInputElement>;
 
@@ -45,8 +43,12 @@ export class LoginComponent implements OnInit {
     private authentication: AuthenticationService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.location.replaceState('/login', '', {page: 1});
+  }
+
+  ngAfterViewInit() {
+    this.username.nativeElement.focus();
   }
 
   @HostListener('window:popstate')
@@ -54,24 +56,22 @@ export class LoginComponent implements OnInit {
     this.page = `page${window.history.state.page}`;
   }
 
-  checkUsername(form: NgForm) {
-    if (form.controls.username.value === this.submittedName) {
-      this.location.forward();
+  async checkUsername(form: NgForm) {
+    if (form.invalid) {
+      this.username.nativeElement.focus();
+      return;
+    }
+
+    (document.activeElement as HTMLElement).blur();
+    this.loading = true;
+    const data = await this.authentication.checkUsername(this.model.username).toPromise();
+    if (data.data) {
+      this.zone.run(window.history.pushState, window.history, [{page: 2}, '']);
+      this.page = 'page2';
     } else {
-      this.loading = true;
-      this.authentication.checkUsername(this.model.username)
-      .subscribe(data => {
-        if (data.data) {
-          this.submittedName = this.model.username;
-          this.zone.run(window.history.pushState, window.history, [{page: 2}, '']);
-          this.page = 'page2';
-        } else {
-          this.loading = false;
-          form.controls.username.setErrors({
-            [data?.errors[0]]: true,
-          });
-        }
-      });
+      this.loading = false;
+      form.controls.username.setErrors({ notFound: true });
+      this.username.nativeElement.focus();
     }
   }
 
